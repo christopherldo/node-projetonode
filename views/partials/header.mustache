@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{#pageTitle}}
+  <title>{{pageTitle}} - {{helpers.defaultPageTitle}}</title>
+  {{/pageTitle}}
+  {{^pageTitle}}
+  <title>{{helpers.defaultPageTitle}}</title>
+  {{/pageTitle}}
+</head>
+<body>
+  <h1>Cabeçalho</h1>
+  
+  <hr>
+
+  <ul>
+    {{#helpers.menu}}
+    <li><a href="{{slug}}">{{name}}</a></li>
+    {{/helpers.menu}}
+  </ul>
+
+  <hr>
