@@ -12,14 +12,8 @@
   {{/pageTitle}}
 </head>
 <body>
-  <h1>Cabeçalho</h1>
-  
-  <hr>
+  {{! CABEÇALHO}}
 
-  <ul>
-    {{#helpers.menu}}
-    <li><a href="{{slug}}">{{name}}</a></li>
-    {{/helpers.menu}}
-  </ul>
-
-  <hr>
+  {{#helpers.menu}}
+    <a href="{{slug}}">{{name}}</a>
+  {{/helpers.menu}}
