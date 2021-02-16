@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const postSchema = new mongoose.Schema({
-  _id: {
+  public_id: {
     type: String,
     required: 'The post needs an _id',
     unique: true,

@@ -17,3 +17,17 @@
   {{#helpers.menu}}
     <a href="{{slug}}">{{name}}</a>
   {{/helpers.menu}}
+
+  <hr>
+
+  {{#flashes}}
+    {{#success}}
+      <div>{{.}}</div>
+    {{/success}}
+    {{#error}}
+      <div>{{.}}</div>
+    {{/error}}
+    {{#info}}
+      <div>{{.}}</div>
+    {{/info}}
+  {{/flashes}}
