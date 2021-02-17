@@ -1,0 +1,30 @@
+{{> header}}
+
+<h2>Editar Post</h2>
+
+<form method="POST">
+  <label for="title">
+    Título:<br>
+    <input type="text" name="title" id="title" value="{{post.title}}">
+  </label>
+
+  <br>
+
+  <label for="body">
+    Corpo:<br>
+    <textarea name="body" id="body">{{post.body}}</textarea>
+  </label>
+
+  <br>
+
+  <label for="tags">
+    Tags:<br>
+    
+  </label>
+
+  <br>
+
+  <input type="submit" value="Salvar">
+</form>
+
+{{> footer}}

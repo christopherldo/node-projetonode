@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
+const slug = require('slug');
+const uuid = require('uuid');
 
 mongoose.Promise = global.Promise;
 
 const postSchema = new mongoose.Schema({
-  public_id: {
+  _id: {
     type: String,
     required: 'The post needs an _id',
+    default: uuid.v4,
     unique: true,
   },
   title: {
@@ -16,12 +19,24 @@ const postSchema = new mongoose.Schema({
   slug: {
     type: String,
     trim: true,
+    unique: true,
   },
   body: {
     type: String,
     trim: true,
+    required: 'The post needs a body',
   },
   tags: [String],
+});
+
+postSchema.pre('save', function (next) {
+  if (this.isModified('title')) {
+    this.slug = slug(this.title, {
+      lower: true
+    });
+  };
+
+  next();
 });
 
 module.exports = mongoose.model('Post', postSchema);
