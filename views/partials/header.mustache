@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,24 +11,31 @@
   {{^pageTitle}}
   <title>{{helpers.defaultPageTitle}}</title>
   {{/pageTitle}}
+  <link rel="stylesheet" href="/assets/css/style.css">
 </head>
+
 <body>
-  {{! CABEÇALHO}}
-
-  {{#helpers.menu}}
-    <a href="{{slug}}">{{name}}</a>
-  {{/helpers.menu}}
-
-  <hr>
+  <header>
+    <h1>Cabeçalho</h1>
+    <hr>
+    <ul>
+      {{#helpers.menu}}
+      <li></li><a href="{{slug}}">{{name}}</a></li>
+      {{/helpers.menu}}
+    </ul>
+  </header>
 
   {{#flashes}}
-    {{#success}}
-      <div>{{.}}</div>
-    {{/success}}
-    {{#error}}
-      <div>{{.}}</div>
-    {{/error}}
-    {{#info}}
-      <div>{{.}}</div>
-    {{/info}}
+  {{#success}}
+  <div class="warning">{{.}}</div>
+  {{/success}}
+
+  {{#error}}
+  <div class="warning">{{.}}</div>
+  {{/error}}
+
+  {{#info}}
+  <div class="warning">{{.}}</div>
+  {{/info}}
+  </div>
   {{/flashes}}

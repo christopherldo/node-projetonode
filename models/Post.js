@@ -27,6 +27,10 @@ const postSchema = new mongoose.Schema({
     required: 'The post needs a body',
   },
   tags: [String],
+  created_at: {
+    type: Date,
+    default: new Date().toISOString(),
+  },
 });
 
 postSchema.pre('save', function (next) {

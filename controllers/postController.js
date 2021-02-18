@@ -1,5 +1,8 @@
 const moongose = require('mongoose');
 const slug = require('slug');
+const {
+  empty
+} = require('uuidv4');
 const Post = moongose.model('Post');
 
 exports.add = (req, res) => {
@@ -13,11 +16,11 @@ exports.addAction = async (req, res) => {
 
   post.title = data.title;
   post.body = data.body;
-  post.tags = [];
+  post.tags = data.tags.split(',').map(tag => tag.trim());
 
   try {
     await post.save();
-  } catch(error) {
+  } catch (error) {
     req.flash('error', `Ocorreu um erro, tente novamente.`);
     return res.redirect('/post/add');
   };
@@ -28,25 +31,24 @@ exports.addAction = async (req, res) => {
 };
 
 exports.edit = async (req, res) => {
-  const response = {
-    post: {},
-  };
-
   const post = await Post.findOne({
     slug: req.params.slug,
   });
 
-  res.render('postEdit', {post});
+  res.render('postEdit', {
+    post
+  });
 };
 
 exports.editAction = async (req, res) => {
   const data = {
     title: req.body.title,
     body: req.body.body,
+    tags: req.body.tags.split(',').map(tag => tag.trim()),
   };
 
-  if(req.body.tags){
-    data.tags = req.body.tags;
+  if (req.body.tags === '') {
+    data.tags = [];
   };
 
   data.slug = slug(req.body.title, {
@@ -66,7 +68,17 @@ exports.editAction = async (req, res) => {
     res.redirect('/');
   } catch (error) {
     req.flash('error', `Ocorreu um erro, tente novamente.`);
-    
+
     res.redirect(`/post/${req.params.slug}/edit`);
   };
+};
+
+exports.view = async (req, res) => {
+  const post = await Post.findOne({
+    slug: req.params.slug,
+  });
+
+  res.render('view', {
+    post
+  });
 };

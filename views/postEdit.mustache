@@ -1,6 +1,6 @@
 {{> header}}
 
-<h2>Editar Post</h2>
+<h1>Editar Post</h1>
 
 <form method="POST">
   <label for="title">
@@ -9,6 +9,7 @@
   </label>
 
   <br>
+  <br>
 
   <label for="body">
     Corpo:<br>
@@ -16,12 +17,14 @@
   </label>
 
   <br>
+  <br>
 
   <label for="tags">
-    Tags:<br>
-    
+    Tags: <small>(Separe as tags por vírgula)</small> <br>
+    <input type="text" name="tags" id="tags" value="{{post.tags}}">
   </label>
 
+  <br>
   <br>
 
   <input type="submit" value="Salvar">
