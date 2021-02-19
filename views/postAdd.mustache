@@ -2,32 +2,40 @@
 
 <h1>Adicionar Post</h2>
 
-<form method="POST">
-  <label for="title">
-    Título:<br>
-    <input type="text" name="title" id="title">
-  </label>
+  <form method="POST" enctype="multipart/form-data">
+    <label for="photo">
+      Imagem:<br>
+      <input type="file" name="photo" id="photo">
+    </label>
 
-  <br>
-  <br>
+    <br>
+    <br>
 
-  <label for="body">
-    Corpo:<br>
-    <textarea name="body" id="body"></textarea>
-  </label>
+    <label for="title">
+      Título:<br>
+      <input type="text" name="title" id="title">
+    </label>
 
-  <br>
-  <br>
+    <br>
+    <br>
 
-  <label for="tags">
-    Tags: <small>(Separe as tags por vírgula)</small> <br>
-    <input type="text" name="tags" id="tags">
-  </label>
+    <label for="body">
+      Corpo:<br>
+      <textarea name="body" id="body"></textarea>
+    </label>
 
-  <br>
-  <br>
+    <br>
+    <br>
 
-  <input type="submit" value="Salvar">
-</form>
+    <label for="tags">
+      Tags: <small>(Separe as tags por vírgula)</small> <br>
+      <input type="text" name="tags" id="tags">
+    </label>
 
-{{> footer}}
+    <br>
+    <br>
+
+    <input type="submit" value="Salvar">
+  </form>
+
+  {{> footer}}

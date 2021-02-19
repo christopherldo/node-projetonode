@@ -4,8 +4,16 @@
 
 {{#posts}}
 <div class="post">
-  <h3><a href="/post/{{slug}}"> {{title}}</a></h3>
+  {{#photo}}
+  <img src="/uploads/{{photo}}" alt="{{title}}">
+  {{/photo}}
+
+  <h3>
+    <a href="/post/{{slug}}"> {{title}}</a>
+  </h3>
+
   <p>{{body}}</p>
+
   <a href="/post/{{slug}}/edit">[EDITAR]</a>
 </div>
 {{/posts}}
