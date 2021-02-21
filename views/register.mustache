@@ -3,8 +3,33 @@
 <h1>Faça o seu Cadastro</h1>
 
 <form method="POST">
-  <input type="text" name="usuario" id="usuario">
-  <button>Entrar</button>
+
+  <label for="name">
+    Nome:<br>
+    <input type="text" name="name" id="name">
+  </label>
+
+  <br>
+  <br>
+
+  <label for="email">
+    E-mail:<br>
+    <input type="email" name="email" id="email">
+  </label>
+
+  <br>
+  <br>
+
+  <label for="password">
+    Senha:<br>
+    <input type="password" name="password" id="password">
+  </label>
+
+  <br>
+  <br>
+
+  <input type="submit" value="Cadastrar">
+
 </form>
 
 {{> footer}}
