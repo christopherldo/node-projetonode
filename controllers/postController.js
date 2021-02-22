@@ -11,6 +11,8 @@ exports.add = (req, res) => {
 };
 
 exports.addAction = async (req, res) => {
+  req.body.author = req.user._id;
+
   let data = req.body;
 
   const post = new Post();
@@ -29,6 +31,7 @@ exports.addAction = async (req, res) => {
   post.public_id = id ? id : uuid.v4();
   post.title = data.title;
   post.body = data.body;
+  post.author = data.author;
 
   if (req.body.tags === '') {
     post.tags = [];

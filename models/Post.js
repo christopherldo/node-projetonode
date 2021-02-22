@@ -4,12 +4,9 @@ const uuid = require('uuid');
 
 mongoose.Promise = global.Promise;
 
+const ObjectId = mongoose.Schema.Types.ObjectId;
+
 const postSchema = new mongoose.Schema({
-  public_id: {
-    type: String,
-    required: 'The post needs an public_id',
-    unique: true,
-  },
   photo: String,
   title: {
     type: String,
@@ -36,6 +33,7 @@ const postSchema = new mongoose.Schema({
     type: Date,
     default: new Date().toISOString(),
   },
+  author: ObjectId,
 });
 
 postSchema.pre('save', async function (next) {
@@ -77,6 +75,42 @@ postSchema.statics.getTagsList = function () {
       $sort: {
         count: -1,
         _id: 1,
+      },
+    },
+  ]);
+};
+
+postSchema.statics.findPosts = function (filters = {}) {
+  return this.aggregate([{
+      $match: filters
+    },
+    {
+      $lookup: {
+        from: 'users',
+        let: {
+          'author': '$author'
+        },
+        pipeline: [{
+            $match: {
+              $expr: {
+                $eq: ['$$author', '$_id']
+              },
+            },
+          },
+          {
+            $limit: 1,
+          },
+        ],
+        as: 'author'
+      },
+    },
+    {
+      $addFields: {
+        'author': {
+          $arrayElemAt: [
+            '$author', 0
+          ],
+        },
       },
     },
   ]);

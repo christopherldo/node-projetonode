@@ -1,14 +1,26 @@
 {{> header}}
 
-<h1>Faça o seu login</h1>
+<h1>Faça o seu Login</h1>
 
 <form method="POST">
-  <input type="text" name="usuario" id="usuario">
+  <label for="email">
+    E-mail:<br>
+    <input type="email" name="email" id="email">
+  </label>
 
   <br>
   <br>
 
-  <button>Entrar</button>
+  <label for="password">
+    Senha:<br>
+    <input type="password" name="password" id="password">
+  </label>
+
+  <br>
+  <br>
+
+  <input type="submit" value="Login">
+
 </form>
 
 {{> footer}}
