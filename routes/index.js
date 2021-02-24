@@ -20,13 +20,46 @@ router.post('/users/login',
 
 router.get('/users/logout', userController.logout);
 
-router.get('/users/register', 
+router.get('/users/register',
   authMiddleware.isGuest,
   userController.register
 );
 router.post('/users/register',
   authMiddleware.isGuest,
   userController.registerAction
+);
+
+router.get('/users/forgot-password',
+  authMiddleware.isGuest,
+  userController.forgotPassword
+);
+router.post('/users/forgot-password',
+  authMiddleware.isGuest,
+  userController.forgotPasswordAction
+);
+
+router.get('/users/reset/:token',
+  authMiddleware.isGuest,
+  userController.forgotPasswordToken
+);
+
+router.post('/users/reset/:token',
+  authMiddleware.isGuest,
+  userController.forgotPasswordTokenAction
+);
+
+router.get('/profile',
+  authMiddleware.isLogged,
+  userController.profile
+);
+router.post('/profile',
+  authMiddleware.isLogged,
+  userController.profileAction
+);
+
+router.post('/profile/password',
+  authMiddleware.isLogged,
+  authMiddleware.changePassword
 );
 
 router.get('/post/add',
@@ -42,10 +75,12 @@ router.post('/post/add',
 
 router.get('/post/:slug/edit',
   authMiddleware.isLogged,
+  postController.canEdit,
   postController.edit
 );
 router.post('/post/:slug/edit',
   authMiddleware.isLogged,
+  postController.canEdit,
   imageMiddleware.upload,
   imageMiddleware.resize,
   postController.editAction

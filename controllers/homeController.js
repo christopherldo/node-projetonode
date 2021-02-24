@@ -26,6 +26,14 @@ exports.index = async (req, res) => {
     };
   };
 
+  if (req.isAuthenticated()) {
+    for (let post in posts) {
+      if (posts[post].author._id.toString() == req.user._id.toString()) {
+        posts[post].canEdit = true;
+      };
+    };
+  };
+
   response.tags = tags;
   response.posts = posts;
 

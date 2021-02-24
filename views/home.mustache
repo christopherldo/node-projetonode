@@ -13,9 +13,9 @@
   <p>{{body}}</p>
   <small>Autor: {{author.name}}</small>
 
-  {{#user}}
+  {{#canEdit}}
   <a href="/post/{{slug}}/edit">[EDITAR]</a>
-  {{/user}}
+  {{/canEdit}}
 </div>
 {{/posts}}
 

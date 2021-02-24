@@ -42,7 +42,7 @@ exports.addAction = async (req, res) => {
   try {
     await post.save();
   } catch (error) {
-    req.flash('error', `Ocorreu um erro, tente novamente.`);
+    req.flash('error', `Ocorreu um erro: ${error.message}`);
 
     if (post.photo) {
       fs.unlinkSync(`./public/uploads/${post.photo}`);
@@ -122,7 +122,7 @@ exports.editAction = async (req, res) => {
 
     res.redirect('/');
   } catch (error) {
-    req.flash('error', `Ocorreu um erro, tente novamente.`);
+    req.flash('error', `Ocorreu um erro: ${error.message}`);
 
     res.redirect(`/post/${req.params.slug}/edit`);
   };
@@ -137,4 +137,21 @@ exports.view = async (req, res) => {
     post,
     pageTitle: post.title
   });
+};
+
+module.exports.canEdit = async (req, res, next) => {
+  const post = await Post.findOne({
+    slug: req.params.slug
+  }).exec();
+
+  if (post) {
+    if (post.author.toString() == req.user._id.toString()) {
+      next();
+      return;
+    }
+  }
+
+  req.flash('error', 'Você não tem permissão de editar este post.');
+  res.redirect('/');
+  return;
 };
