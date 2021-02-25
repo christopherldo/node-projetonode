@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const crypto = require('crypto');
 const mailHandler = require('../handlers/mailHandler');
+const validator = require('validator');
 
 exports.login = (req, res) => {
   res.render('login', {
@@ -12,6 +13,12 @@ exports.loginAction = (req, res) => {
   const data = {
     email: req.body.email,
     password: req.body.password,
+  };
+
+  if (validator.isEmail(data.email) === false) {
+    req.flash('error', 'O e-mail enviado não é um e-mail válido.');
+    res.redirect('back');
+    return;
   };
 
   const auth = User.authenticate();
@@ -41,14 +48,51 @@ exports.registerAction = (req, res) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
+    password_confirmation: req.body.password_confirmation,
+  };
+
+  if (validator.isLength(data.name, {
+      min: 2,
+      max: 50,
+    }) === false) {
+    req.flash('error', 'O nome precisa conter de 2 a 50 caracteres');
+    res.redirect('back');
+    return;
+  };
+
+  if (validator.isEmail(data.email) === false) {
+    req.flash('error', 'O e-mail enviado não é um e-mail válido.');
+    res.redirect('back');
+    return;
+  };
+
+  if (validator.isLength(data.email, {
+      max: 50
+    }) === false) {
+    req.flash('error', 'O e-mail não pode ultrapassar o limite de 50 caracteres');
+    res.redirect('back');
+    return;
+  };
+
+  if (validator.isLength(data.password, {
+      min: 8
+    }) === false) {
+    req.flash('error', 'Sua senha precisa conter pelo menos 8 caracteres');
+    res.redirect('back');
+    return;
+  };
+
+  if (validator.equals(data.password, data.password_confirmation) === false) {
+    req.flash('error', 'A senha e a confirmação não são idênticas');
+    res.redirect('back');
+    return;
   };
 
   const newUser = new User(data);
 
   User.register(newUser, data.password, (err) => {
     if (err) {
-      req.flash('error', JSON.stringify(err));
-      console.log('Erro ao registrar: ' + err);
+      req.flash('error', err.message);
       res.redirect('/users/register');
       return;
     };
@@ -70,15 +114,43 @@ exports.profile = (req, res) => {
 };
 
 exports.profileAction = async (req, res) => {
-  const data = req.body;
+  const data = {};
+
+  if (req.body.name) {
+    data.name = req.body.name;
+
+    if (validator.isLength(data.name, {
+        min: 2,
+        max: 50,
+      }) === false) {
+      req.flash('error', 'O nome precisa conter de 2 a 50 caracteres');
+      res.redirect('back');
+      return;
+    };
+  };
+
+  if (req.body.email) {
+    data.email = req.body.email;
+
+    if (validator.isEmail(data.email) === false) {
+      req.flash('error', 'O e-mail enviado não é um e-mail válido.');
+      res.redirect('back');
+      return;
+    };
+
+    if (validator.isLength(data.email, {
+        max: 50
+      }) === false) {
+      req.flash('error', 'O e-mail não pode ultrapassar o limite de 50 caracteres');
+      res.redirect('back');
+      return;
+    };
+  };
 
   try {
     await User.findOneAndUpdate({
       _id: req.user._id
-    }, {
-      name: data.name,
-      email: data.email
-    }, {
+    }, data, {
       new: true,
       runValidators: true
     });
@@ -101,12 +173,26 @@ exports.forgotPassword = (req, res) => {
 exports.forgotPasswordAction = async (req, res) => {
   const data = req.body;
 
+  if (validator.isEmail(data.email) === false) {
+    req.flash('error', 'O e-mail enviado não é um e-mail válido.');
+    res.redirect('back');
+    return;
+  };
+
+  if (validator.isLength(data.email, {
+      max: 50
+    }) === false) {
+    req.flash('error', 'O e-mail não pode ultrapassar o limite de 50 caracteres');
+    res.redirect('back');
+    return;
+  };
+
   const user = await User.findOne({
     email: data.email
   }).exec();
 
   if (user === null) {
-    req.flash('error', `Não foi encontrado o e-mail ${data.email} nos nossos sistemas`);
+    req.flash('error', `Não foi encontrado o e-mail "${data.email}" nos nossos sistemas`);
     res.redirect('/users/forgot-password');
     return;
   };

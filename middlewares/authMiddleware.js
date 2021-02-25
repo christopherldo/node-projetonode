@@ -1,3 +1,5 @@
+const validator = require('validator');
+
 exports.isLogged = (req, res, next) => {
   if (req.isAuthenticated() === false) {
     req.flash('error', 'Você não tem permissão para acessar essa página!')
@@ -20,9 +22,17 @@ exports.isGuest = (req, res, next) => {
 exports.changePassword = (req, res) => {
   const data = req.body;
 
-  if (data.password !== data.password_confirmation) {
-    req.flash('error', 'As senhas não coincidem');
-    res.redirect('/profile');
+  if (validator.isLength(data.password, {
+      min: 8
+    }) === false) {
+    req.flash('error', 'Sua senha precisa conter pelo menos 8 caracteres');
+    res.redirect('back');
+    return;
+  };
+
+  if (validator.equals(data.password, data.password_confirmation) === false) {
+    req.flash('error', 'As senhas informadas não coincidem');
+    res.redirect('back');
     return;
   };
 

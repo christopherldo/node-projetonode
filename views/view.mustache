@@ -9,11 +9,22 @@
 <hr>
 
 <div class="article-info">
-  <small>Criado em: {{post.created_at}}</small>
+  <small>Criado em: <time>{{post.created_at}}</time></small>
 
   <br>
 
+  {{#post.tags}}
   <small>Tags: {{post.tags}}</small>
+  {{/post.tags}}
 </div>
+
+<script>
+  window.onload = () => {
+    let dateTag = document.querySelector('time').innerHTML;
+    let date = new Date(dateTag).toLocaleString('en-GB');
+
+    document.querySelector('time').innerHTML = date;
+  };
+</script>
 
 {{> footer}}

@@ -7,6 +7,7 @@ mongoose.Promise = global.Promise;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const postSchema = new mongoose.Schema({
+  public_id: String,
   photo: String,
   title: {
     type: String,
@@ -29,10 +30,7 @@ const postSchema = new mongoose.Schema({
     required: 'The post needs a body',
   },
   tags: [String],
-  created_at: {
-    type: Date,
-    default: new Date().toISOString(),
-  },
+  created_at: Date,
   author: {
     type: ObjectId,
     ref: 'User',

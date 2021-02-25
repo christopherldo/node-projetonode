@@ -6,7 +6,7 @@
 
   <label for="name">
     Nome:<br>
-    <input type="text" name="name" id="name">
+    <input type="text" name="name" id="name" required minlength="2" maxlength="50">
   </label>
 
   <br>
@@ -14,7 +14,7 @@
 
   <label for="email">
     E-mail:<br>
-    <input type="email" name="email" id="email">
+    <input type="email" name="email" id="email" required maxlength="50">
   </label>
 
   <br>
@@ -22,7 +22,15 @@
 
   <label for="password">
     Senha:<br>
-    <input type="password" name="password" id="password">
+    <input type="password" name="password" id="password" required minlength="8">
+  </label>
+
+  <br>
+  <br>
+
+  <label for="password_confirmation">
+    Confirme a senha:<br>
+    <input type="password" name="password_confirmation" id="password_confirmation" required minlength="8">
   </label>
 
   <br>

@@ -86,6 +86,12 @@ router.post('/post/:slug/edit',
   postController.editAction
 );
 
+router.get('/post/:slug/delete', 
+  authMiddleware.isLogged,
+  postController.canEdit,
+  postController.delete
+);
+
 router.get('/post/:slug', postController.view);
 
 module.exports = router;

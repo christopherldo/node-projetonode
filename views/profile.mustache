@@ -5,7 +5,7 @@
 <form method="POST">
   <label for="name">
     Nome completo:<br>
-    <input type="text" name="name" id="name" value="{{user.name}}">
+    <input type="text" name="name" id="name" value="{{user.name}}" minlength="2" maxlength="50">
   </label>
 
   <br>
@@ -13,7 +13,7 @@
 
   <label for="email">
     E-mail:<br>
-    <input type="email" name="email" id="email" value="{{user.email}}">
+    <input type="email" name="email" id="email" value="{{user.email}}" maxlength="50">
   </label>
 
   <br>
@@ -25,7 +25,7 @@
 <form action="/profile/password" method="POST">
   <label for="password">
     Nova senha:<br>
-    <input type="password" name="password" id="password">
+    <input type="password" name="password" id="password" minlength="8" required>
   </label>
 
   <br>
@@ -33,7 +33,7 @@
 
   <label for="password_confirmation">
     Confirme a senha:<br>
-    <input type="password" name="password_confirmation" id="password_confirmation">
+    <input type="password" name="password_confirmation" id="password_confirmation" minlength="8" required>
   </label>
 
   <br>

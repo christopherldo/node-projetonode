@@ -37,11 +37,7 @@ exports.resize = async (req, res, next) => {
   };
 
   if (post) {
-    if (post.photo) {
-      filename = post.photo.split('.')[0];
-    } else {
-      filename = post.public_id;
-    };
+    filename = post.public_id;
   } else {
     filename = uuid.v4();
   };

@@ -13,8 +13,11 @@
   <p>{{body}}</p>
   <small>Autor: {{author.name}}</small>
 
+  <br>
+
   {{#canEdit}}
   <a href="/post/{{slug}}/edit">[EDITAR]</a>
+  <a href="/post/{{slug}}/delete">[APAGAR]</a>
   {{/canEdit}}
 </div>
 {{/posts}}

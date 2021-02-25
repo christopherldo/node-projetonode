@@ -31,6 +31,7 @@ exports.addAction = async (req, res) => {
   post.public_id = id ? id : uuid.v4();
   post.title = data.title;
   post.body = data.body;
+  post.created_at = new Date().toISOString();
   post.author = data.author;
 
   if (req.body.tags === '') {
@@ -61,10 +62,12 @@ exports.edit = async (req, res) => {
     slug: req.params.slug,
   });
 
-  res.render('postEdit', {
-    post,
-    pageTitle: 'Editar'
-  });
+  if (post) {
+    res.render('postEdit', {
+      post,
+      pageTitle: 'Editar'
+    });
+  };
 };
 
 exports.editAction = async (req, res) => {
@@ -72,7 +75,10 @@ exports.editAction = async (req, res) => {
     title: req.body.title,
     body: req.body.body,
     tags: req.body.tags.split(',').map(tag => tag.trim()),
-    photo: req.body.photo,
+  };
+
+  if (req.body.photo) {
+    data.photo = req.body.photo;
   };
 
   if (req.body.tags === '') {
@@ -128,15 +134,34 @@ exports.editAction = async (req, res) => {
   };
 };
 
+exports.delete = async (req, res) => {
+  try {
+    await Post.findOneAndDelete({
+      slug: req.params.slug,
+    });
+  } catch (error) {
+    req.flash('error', error.message);
+    res.redirect('back');
+    return;
+  };
+
+  req.flash('success', 'Post excluído com sucesso!');
+  res.redirect('back');
+};
+
 exports.view = async (req, res) => {
   const post = await Post.findOne({
     slug: req.params.slug,
   });
 
-  res.render('view', {
-    post,
-    pageTitle: post.title
-  });
+  if (post) {
+    res.render('view', {
+      post,
+      pageTitle: post.title
+    });
+  } else {
+    res.render('404');
+  };
 };
 
 module.exports.canEdit = async (req, res, next) => {
@@ -148,8 +173,8 @@ module.exports.canEdit = async (req, res, next) => {
     if (post.author.toString() == req.user._id.toString()) {
       next();
       return;
-    }
-  }
+    };
+  };
 
   req.flash('error', 'Você não tem permissão de editar este post.');
   res.redirect('/');
