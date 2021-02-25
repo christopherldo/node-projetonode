@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const crypto = require('crypto');
+const mailHandler = require('../handlers/mailHandler');
 
 exports.login = (req, res) => {
   res.render('login', {
@@ -63,7 +64,9 @@ exports.logout = (req, res) => {
 }
 
 exports.profile = (req, res) => {
-  res.render('profile');
+  res.render('profile', {
+    pageTitle: 'Meu Perfil',
+  });
 };
 
 exports.profileAction = async (req, res) => {
@@ -90,7 +93,9 @@ exports.profileAction = async (req, res) => {
 };
 
 exports.forgotPassword = (req, res) => {
-  res.render('forgotPassword');
+  res.render('forgotPassword', {
+    pageTitle: 'Recuperação de senha'
+  });
 };
 
 exports.forgotPasswordAction = async (req, res) => {
@@ -114,7 +119,19 @@ exports.forgotPasswordAction = async (req, res) => {
 
   await user.save();
 
-  const resetLink = `https://${req.headers.host}/users/reset/${user.resetPasswordToken}`;
+  const resetLink = `http://${req.headers.host}/users/reset/${user.resetPasswordToken}`;
+
+  const to = `${user.name} <${user.email}>`;
+  const subject = 'Redefina sua senha';
+  const html = `Testando e-mail com link: <a href="${resetLink}">Clique aqui para redefinir sua senha.</a>`;
+  const text = `Testando e-mail com link: ${resetLink}`;
+
+  mailHandler.send({
+    to,
+    subject,
+    html,
+    text,
+  });
 
   req.flash('success', `Enviamos um e-mail de redefinição para ${data.email}, favor checar também a caixa de spam`);
   res.redirect('/users/login');
@@ -136,7 +153,9 @@ exports.forgotPasswordToken = async (req, res) => {
     return;
   };
 
-  res.render('resetPassword');
+  res.render('resetPassword', {
+    pageTitle: 'Redefina a senha'
+  });
 };
 
 exports.forgotPasswordTokenAction = async (req, res) => {
@@ -162,6 +181,9 @@ exports.forgotPasswordTokenAction = async (req, res) => {
   };
 
   user.setPassword(data.password, async () => {
+    user.resetPasswordExpires = null;
+    user.resetPasswordToken = null;
+
     await user.save();
 
     req.flash('success', 'Senha alterada com sucesso!');
