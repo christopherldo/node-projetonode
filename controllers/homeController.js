@@ -26,6 +26,10 @@ exports.index = async (req, res) => {
     };
   };
 
+  for(let post in posts){
+    posts[post].body = posts[post].body.substring(0, 250) + '...';
+  };
+
   if (req.isAuthenticated()) {
     for (let post in posts) {
       if (posts[post].author._id.toString() == req.user._id.toString()) {

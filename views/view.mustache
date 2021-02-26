@@ -1,21 +1,23 @@
 {{> header}}
 
-<article>
-  <h1>{{post.title}}</h1>
+<div class="post-view">
+  <article>
+    <h1>{{post.title}}</h1>
 
-  <p>{{post.body}}</p>
-</article>
+    <p>{{post.body}}</p>
+  </article>
 
-<hr>
+  <hr>
 
-<div class="article-info">
-  <small>Criado em: <time>{{post.created_at}}</time></small>
+  <div class="article-info">
+    <small>Criado em: <time>{{post.created_at}}</time></small>
 
-  <br>
+    <br>
 
-  {{#post.tags}}
-  <small>Tags: {{post.tags}}</small>
-  {{/post.tags}}
+    {{#post.tags}}
+    <small>Tags: {{post.tags}}</small>
+    {{/post.tags}}
+  </div>
 </div>
 
 <script>

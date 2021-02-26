@@ -164,6 +164,8 @@ exports.view = async (req, res) => {
     slug: req.params.slug,
   });
 
+  post.tags = post.tags.join(', ');
+
   if (post) {
     res.render('view', {
       post,

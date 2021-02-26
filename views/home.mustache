@@ -1,10 +1,10 @@
 {{> header}}
 
-{{#posts}}
 <div class="main-home">
+{{#posts}}
   <div class="post">
     {{#photo}}
-    <img src="/uploads/{{photo}}" alt="{{title}}">
+    <div class="img" style="background-image: url('/uploads/{{photo}}');"></div>
     {{/photo}}
 
     <h3>
@@ -26,13 +26,13 @@
     </div>
   </div>
   {{/posts}}
+</div>
 
-  <div class="tags">
-    {{#tags}}
-    <div class="tag {{class}}">
-      <a href="/?tag={{_id}}">{{_id}} ({{count}})</a>
-    </div>
-    {{/tags}}
+<div class="tags">
+  {{#tags}}
+  <div class="tag {{class}}">
+    <a href="/?tag={{_id}}">{{_id}}</a>
   </div>
+  {{/tags}}
 </div>
 {{> footer}}
