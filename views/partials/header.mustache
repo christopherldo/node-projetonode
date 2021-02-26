@@ -16,29 +16,29 @@
 
 <body>
   <header>
-    <h1>Cabeçalho</h1>
+    <h1>{{helpers.defaultPageTitle}}</h1>
     {{#user}}
-    Olá, <a href="/profile">{{user.name}}</a>!
+    <div class="profile">
+      Olá, <a href="/profile">{{user.name}}</a>!
+    </div>
     {{/user}}
     <hr>
     <ul>
       {{#helpers.menu}}
-      <li></li><a href="{{slug}}">{{name}}</a></li>
+      <li><a href="{{slug}}">{{name}}</a></li>
       {{/helpers.menu}}
     </ul>
   </header>
 
   {{#flashes}}
   {{#success}}
-  <div class="warning">{{.}}</div>
+  <div class="warning-success">{{.}}</div>
   {{/success}}
 
   {{#error}}
-  <div class="warning">{{.}}</div>
+  <div class="warning-error">{{.}}</div>
   {{/error}}
-
-  {{#info}}
-  <div class="warning">{{.}}</div>
-  {{/info}}
   </div>
   {{/flashes}}
+
+  <main>

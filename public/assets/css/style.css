@@ -42,6 +42,7 @@ li {
 }
 
 ul {
+  padding: 0 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,26 +52,55 @@ li {
   padding: 10px;
 }
 
-.warning {
-  border: 2px solid #5555FF;
-  background-color: #0000FF;
+.warning-success {
+  border: 2px solid #02ff0f;
+  background-color: #02ff0f;
   color: #FFF;
   padding: 10px 20px;
   border-radius: 5px;
 }
 
+.warning-error {
+  border: 2px solid #ff5555;
+  background-color: #ff0000;
+  color: #FFF;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+main {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
+  padding: 15px;
+}
+
+main-home {
+  display: flex;
+  flex-flow: column;
+}
+
 .post {
-  width: 300px;
-  display: inline-block;
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  max-width: 300px;
+  min-width: 200px;
   box-shadow: 0px 0px 5px #999;
   padding: 10px;
-  margin: 20px;
+  margin: 10px;
   border-radius: 5px;
   overflow: hidden;
 }
 
 .post img {
   max-width: 100%;
+}
+
+.post h3 {
+  text-align: center;
+  text-transform: capitalize;
 }
 
 form {
@@ -124,4 +154,37 @@ article p{
 
 .article-info {
   padding: 0 20px;
+}
+
+.profile {
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.profile a {
+  margin-left: 5px;
+  color: #0707a7;
+}
+
+.can-edit {
+  display: flex;
+  justify-content: center;
+}
+
+.can-edit a {
+  margin-top: 5px;
+  padding: 2px;
+}
+
+@media (max-width: 768px) {
+  .post {
+    min-width: 250px;
+  }
+}
+
+@media (max-width: 280px) {
+  ul li {
+    font-size: 14px;
+  }
 }

@@ -1,33 +1,38 @@
 {{> header}}
 
 {{#posts}}
-<div class="post">
-  {{#photo}}
-  <img src="/uploads/{{photo}}" alt="{{title}}">
-  {{/photo}}
+<div class="main-home">
+  <div class="post">
+    {{#photo}}
+    <img src="/uploads/{{photo}}" alt="{{title}}">
+    {{/photo}}
 
-  <h3>
-    <a href="/post/{{slug}}"> {{title}}</a>
-  </h3>
+    <h3>
+      <a href="/post/{{slug}}"> {{title}}</a>
+    </h3>
 
-  <p>{{body}}</p>
-  <small>Autor: {{author.name}}</small>
+    <p>{{body}}</p>
+    <div class="bottom-article">
+      <small>Autor: {{author.name}}</small>
 
-  <br>
+      <br>
 
-  {{#canEdit}}
-  <a href="/post/{{slug}}/edit">[EDITAR]</a>
-  <a href="/post/{{slug}}/delete">[APAGAR]</a>
-  {{/canEdit}}
-</div>
-{{/posts}}
-
-<div class="tags">
-  {{#tags}}
-  <div class="tag {{class}}">
-    <a href="/?tag={{_id}}">{{_id}} ({{count}})</a>
+      {{#canEdit}}
+      <div class="can-edit">
+        <a href="/post/{{slug}}/edit">[EDITAR]</a>
+        <a href="/post/{{slug}}/delete">[APAGAR]</a>
+      </div>
+      {{/canEdit}}
+    </div>
   </div>
-  {{/tags}}
-</div>
+  {{/posts}}
 
+  <div class="tags">
+    {{#tags}}
+    <div class="tag {{class}}">
+      <a href="/?tag={{_id}}">{{_id}} ({{count}})</a>
+    </div>
+    {{/tags}}
+  </div>
+</div>
 {{> footer}}

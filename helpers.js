@@ -1,4 +1,4 @@
-exports.defaultPageTitle = "Site ABC";
+exports.defaultPageTitle = "Notícias Express";
 
 exports.menu = [{
     name: 'Home',

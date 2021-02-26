@@ -135,10 +135,20 @@ exports.editAction = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
+  const post = await Post.findOne({
+    slug: req.params.slug,
+  });
+
   try {
-    await Post.findOneAndDelete({
-      slug: req.params.slug,
-    });
+    if (post) {
+      if (post.photo) {
+        fs.unlinkSync(`./public/uploads/${post.photo}`);
+      };
+
+      await Post.findOneAndDelete({
+        slug: req.params.slug,
+      });
+    };
   } catch (error) {
     req.flash('error', error.message);
     res.redirect('back');
